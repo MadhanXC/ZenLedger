@@ -1,0 +1,136 @@
+
+{
+  "entities": {
+    "CompanyProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CompanyProfile",
+      "type": "object",
+      "description": "Represents the profile and details of the company using QuikQuote Pro, essential for professional documentation.",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "address": { "type": "string" },
+        "contactEmail": { "type": "string", "format": "email" },
+        "contactPhone": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "logoSize": { "type": "number", "default": 128 },
+        "bankName": { "type": "string" },
+        "bankAccountName": { "type": "string", "description": "The name of the account holder." },
+        "bankAccountNumber": { "type": "string" },
+        "bankRoutingNumber": { "type": "string" },
+        "bankBranchName": { "type": "string", "description": "The branch where the account is held." },
+        "gstNumber": { "type": "string" },
+        "defaultTerms": { "type": "string", "description": "Default terms and conditions for all documents." },
+        "authorizedSignatoryName": { "type": "string", "description": "Name of the person authorized to sign documents." },
+        "authorizedSignatoryImageUrl": { "type": "string", "description": "URL or SVG for the authorized signatory's signature." },
+        "authorizedSignatoryImageSize": { "type": "number", "default": 80 }
+      },
+      "required": ["id", "name", "address", "contactEmail", "contactPhone", "gstNumber"]
+    },
+    "Client": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Client",
+      "type": "object",
+      "description": "Represents a customer or business partner.",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "contactPerson": { "type": "string" },
+        "contactEmail": { "type": "string", "format": "email" },
+        "contactPhone": { "type": "string" },
+        "address": { "type": "string" },
+        "gstNumber": { "type": "string" }
+      },
+      "required": ["id", "name", "contactEmail"]
+    },
+    "Quote": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Quote",
+      "type": "object",
+      "description": "Represents a generated quote or estimate provided to a client.",
+      "properties": {
+        "id": { "type": "string" },
+        "clientId": { "type": "string" },
+        "oneTimeClientName": { "type": "string" },
+        "oneTimeClientAddress": { "type": "string" },
+        "oneTimeClientGst": { "type": "string" },
+        "companyProfileId": { "type": "string" },
+        "quoteNumber": { "type": "string" },
+        "issueDate": { "type": "string", "format": "date-time" },
+        "validUntilDate": { "type": "string", "format": "date-time" },
+        "status": { "type": "string" },
+        "totalAmount": { "type": "number" },
+        "totalGSTAmount": { "type": "number" },
+        "notes": { "type": "string" },
+        "termsConditions": { "type": "string" },
+        "authorizedSignatory": { "type": "string" }
+      },
+      "required": ["id", "quoteNumber", "issueDate", "validUntilDate", "status", "totalAmount", "totalGSTAmount"]
+    },
+    "Invoice": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Invoice",
+      "type": "object",
+      "description": "Represents an invoice generated for a client.",
+      "properties": {
+        "id": { "type": "string" },
+        "clientId": { "type": "string" },
+        "oneTimeClientName": { "type": "string" },
+        "oneTimeClientAddress": { "type": "string" },
+        "oneTimeClientGst": { "type": "string" },
+        "companyProfileId": { "type": "string" },
+        "quoteId": { "type": "string" },
+        "invoiceNumber": { "type": "string" },
+        "issueDate": { "type": "string", "format": "date-time" },
+        "dueDate": { "type": "string", "format": "date-time" },
+        "paymentStatus": { "type": "string" },
+        "totalAmount": { "type": "number" },
+        "totalGSTAmount": { "type": "number" },
+        "notes": { "type": "string" },
+        "termsConditions": { "type": "string" },
+        "authorizedSignatory": { "type": "string" }
+      },
+      "required": ["id", "invoiceNumber", "issueDate", "dueDate", "paymentStatus", "totalAmount", "totalGSTAmount"]
+    },
+    "Settings": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Settings",
+      "type": "object",
+      "description": "User specific application settings including theme preferences.",
+      "properties": {
+        "id": { "type": "string" },
+        "currency": { "type": "string" },
+        "dateFormat": { "type": "string" },
+        "defaultTaxRate": { "type": "string" },
+        "quotePrefix": { "type": "string" },
+        "invoicePrefix": { "type": "string" },
+        "theme": { "type": "string", "enum": ["default", "blue", "purple", "orange", "custom"] },
+        "customColors": {
+          "type": "object",
+          "properties": {
+            "background": { "type": "string" },
+            "primary": { "type": "string" },
+            "accent": { "type": "string" }
+          }
+        },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "auth": {
+    "providers": ["password", "anonymous"]
+  },
+  "firestore": {
+    "structure": [
+      { "path": "/users/{userId}", "definition": { "entityName": "User", "description": "User profile root." } },
+      { "path": "/users/{userId}/settings/{id}", "definition": { "entityName": "Settings", "description": "App preferences." } },
+      { "path": "/users/{userId}/companyProfile/{profileId}", "definition": { "entityName": "CompanyProfile", "description": "Company details." } },
+      { "path": "/users/{userId}/clients/{clientId}", "definition": { "entityName": "Client", "description": "Customer list." } },
+      { "path": "/users/{userId}/productServices/{id}", "definition": { "entityName": "ProductService", "description": "Service catalog." } },
+      { "path": "/users/{userId}/quotes/{id}", "definition": { "entityName": "Quote", "description": "Estimates." } },
+      { "path": "/users/{userId}/quotes/{id}/lineItems/{lineId}", "definition": { "entityName": "QuoteLineItem", "description": "Quote items." } },
+      { "path": "/users/{userId}/invoices/{id}", "definition": { "entityName": "Invoice", "description": "Billing." } },
+      { "path": "/users/{userId}/invoices/{id}/lineItems/{lineId}", "definition": { "entityName": "InvoiceLineItem", "description": "Invoice items." } }
+    ]
+  }
+}

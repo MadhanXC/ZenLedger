@@ -453,7 +453,7 @@ export const DocumentPDF = ({ type, data, items, profile, client }: PDFProps) =>
       textAlign: 'right',
     }}
   >
-    PHONE TEST: {profile?.contactPhone}
+    Phone: {profile?.contactPhone}
   </Text>
 
   <Text
@@ -464,7 +464,7 @@ export const DocumentPDF = ({ type, data, items, profile, client }: PDFProps) =>
       textAlign: 'right',
     }}
   >
-    EMAIL TEST: {profile?.contactEmail}
+    Email: {profile?.contactEmail}
   </Text>
 
   {profile?.gstNumber && (

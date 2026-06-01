@@ -443,31 +443,7 @@ export const DocumentPDF = ({ type, data, items, profile, client }: PDFProps) =>
   >
     {profile?.address || 'Business Address'}
   </Text>
-
-  <Text
-    style={{
-      fontSize: 9,
-      color: '#000000',
-      marginTop: 4,
-      fontWeight: 'bold',
-      textAlign: 'right',
-    }}
-  >
-    Phone: {profile?.contactPhone}
-  </Text>
-
-  <Text
-    style={{
-      fontSize: 9,
-      color: '#000000',
-      fontWeight: 'bold',
-      textAlign: 'right',
-    }}
-  >
-    Email: {profile?.contactEmail}
-  </Text>
-
-  {profile?.gstNumber && (
+{profile?.gstNumber && (
     <Text
       style={{
         fontSize: 8,
@@ -480,6 +456,30 @@ export const DocumentPDF = ({ type, data, items, profile, client }: PDFProps) =>
       GSTIN: {profile.gstNumber}
     </Text>
   )}
+  <Text
+    style={{
+      fontSize: 9,
+      color: '#000000',
+      marginTop: 4,
+      
+      textAlign: 'right',
+    }}
+  >
+    Phone: {profile?.contactPhone}
+  </Text>
+
+  <Text
+    style={{
+      fontSize: 9,
+      color: '#000000',
+      
+      textAlign: 'right',
+    }}
+  >
+    Email: {profile?.contactEmail}
+  </Text>
+
+  
 </View>
         </View>
 

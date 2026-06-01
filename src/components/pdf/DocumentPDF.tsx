@@ -458,7 +458,7 @@ export const DocumentPDF = ({ type, data, items, profile, client }: PDFProps) =>
   )}
   <Text
     style={{
-      fontSize: 9,
+      fontSize: 8,
       color: '#000000',
       marginTop: 4,
       
@@ -470,7 +470,7 @@ export const DocumentPDF = ({ type, data, items, profile, client }: PDFProps) =>
 
   <Text
     style={{
-      fontSize: 9,
+      fontSize: 8,
       color: '#000000',
       
       textAlign: 'right',
